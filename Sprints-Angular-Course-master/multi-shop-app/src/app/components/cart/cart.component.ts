@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { CartLine } from 'src/app/interfaces/cart-item';
 import { CartService } from 'src/app/services/cart.service';
 import { Product } from 'src/app/interfaces/product'
@@ -19,22 +19,24 @@ export class CartComponent implements OnInit {
     size: 's',
     color: 'red',
   })
-  cartLines: Array<CartLine> = [
-    this.cartlin1
-  ];
+  cartLines: Array<CartLine> = this.cartservice.cartLines
 
 
+  @Input() index: number | undefined
   deleteLine(id: number) {
     return this.cartservice.removeLine(id)
 
   }
   deletepro(index: number) {
     return this.cartservice.removeProduct(index)
-  }
-  // sum() {
-  //   return this.cartservice.gettotal();
-  // }
 
+  }
+  sum() {
+    return this.cartservice.gettotal();
+  }
+  total() {
+    return this.cartservice.getTotalWShipping()
+  }
   constructor(private cartservice: CartService) { }
 
   ngOnInit(): void {
